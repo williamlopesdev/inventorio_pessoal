@@ -7,39 +7,52 @@ import sqlite3 as lite
 #criando conexão
 con = lite.connect('dados.db')
 
-dados = ['sofa', 'sala', 'marrom', 'kkkkkk', '19/09/2021', '100', '1234', 'c:/imagens']
-'''#INSERT
-with con:
-    cur = con.cursor()
-    query = "INSERT INTO inventorio(nome, local, descricao, marca, data_da_compra, valor_da_compra, serie, imagem) VALUES(?,?,?,?,?,?,?,?)"
-    cur.execute(query, dados)
+ #INSERT
+def inserir_form(i):
+    with con:
+        cur = con.cursor()
+        query = "INSERT INTO inventorio(nome, local, descricao, marca, data_da_compra, valor_da_compra, serie, imagem) VALUES(?,?,?,?,?,?,?,?)"
+        cur.execute(query, i)
 
 
-atualizar_dados = ['sofa', 'Cozinha', 'marrom', 'kkkkkk', '19/09/2021', '100', '1234', 'c:/imagens', 1]
 #UPDATE
-with con:
-    cur = con.cursor()
-    query = "UPDATE inventorio SET nome=?, local=?, descricao=?, marca=?, data_da_compra=?, valor_da_compra=?, serie=?, imagem=? WHERE id=?"
-    cur.execute(query, atualizar_dados)'''
+def atualizar_form(i):
+    with con:
+        cur = con.cursor()
+        query = "UPDATE inventorio SET nome=?, local=?, descricao=?, marca=?, data_da_compra=?, valor_da_compra=?, serie=?, imagem=? WHERE id=?"
+        cur.execute(query, i)
 
 
-deletar_dados = str(1)
+def deletar_form(i):
 #DELETAR DADOS
-with con:
-    cur = con.cursor()
-    query = "DELETE FROM inventorio WHERE id=?"
-    cur.execute(query, deletar_dados)
+    with con:
+        cur = con.cursor()
+        query = "DELETE FROM inventorio WHERE id=?"
+        cur.execute(query, i)
 
 
-ver_dados = []
+    #VER DADOS
+def ver_form():
+    ver_dados = []
+    with con:
+        cur = con.cursor()
+        query = "SELECT * FROM inventorio"
+        cur.execute(query)
+
+        rows = cur.fetchall()
+        for row in rows:
+            ver_dados.append(row)
+
+    return ver_dados
+
 #VER DADOS
-with con:
-    cur = con.cursor()
-    query = "SELECT * FROM inventorio"
-    cur.execute(query)
+def ver_item(id):
+    ver_dados_individuais = []
+    with con:
+        cur = con.cursor()
+        query = "SELECT * FROM inventorio WHERE id=?"
+        cur.execute(query, id)
 
-    rows = cur.fetchall()
-    for row in rows:
-        ver_dados.append(row)
-
-print(ver_dados)
+        rows = cur.fetchall()
+        for row in rows:
+            ver_dados_individuais.append(row)
